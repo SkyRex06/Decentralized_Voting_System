@@ -1,0 +1,97 @@
+/* Modernized Navbar with Deep Blue Gradient */
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: rgb(231, 168, 179); /* Soft yellow hover effect */
+}
+
+nav {
+  display: flex;
+  height: 10vh;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb); /* Deep Blue Gradient */
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  align-items: center;
+  padding: 0 5%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+nav .header {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  cursor: pointer;
+}
+
+nav .navbar-links {
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+}
+
+nav .navbar-links a {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: capitalize;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+nav .navbar-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+nav .burger-menu {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Responsive Navbar */
+@media all and (max-width: 777px) {
+  nav .burger-menu {
+    display: block;
+  }
+
+  nav .navbar-links {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    display: block;
+    width: 50%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateX(-700px);
+    transition: transform 0.5s ease-in-out;
+    border-radius: 0 0 10px 10px;
+  }
+
+  nav .navbar-links.active {
+    transform: translateX(0);
+  }
+
+  nav .navbar-links li {
+    padding: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+  }
+}
+

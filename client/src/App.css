@@ -1,0 +1,167 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-image: url('https://wallpapers-clan.com/wp-content/uploads/2024/03/starfall-night-sky-mountains-aesthetic-gif-preview-desktop-wallpaper.gif'); /* Replace with your image path */
+  background-size: cover; /* Ensures the image covers the entire screen */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents repeating */
+  background-attachment: fixed; /* Keeps it fixed while scrolling */
+}
+
+
+/* Page Header */
+h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0;
+  text-transform: uppercase;
+}
+
+/* Code Styling */
+code {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  background-color: #f5f5f5;
+  padding: 5px 8px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Main Container */
+.container-main {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 2%;
+  margin: 15px auto;
+  width: max-content;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Individual Item Styling */
+.container-item {
+  transition: all 0.4s ease-in-out;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  width: 960px;
+  padding: 20px;
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  overflow: auto;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Text Title */
+.title {
+  text-transform: capitalize;
+  font-weight: 600;
+  color: #444;
+}
+
+/* List Container */
+.container-list {
+  width: 100%;
+  padding: 12px;
+  margin: 5px auto;
+  display: block;
+  overflow: auto;
+}
+
+/* Centering Items */
+.center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Media Queries for Responsive Layout */
+@media all and (max-width: 1020px) {
+  .container-item {
+    width: 777px;
+  }
+}
+@media all and (max-width: 900px) {
+  .container-item {
+    width: 700px;
+    display: block;
+  }
+}
+@media all and (max-width: 750px) {
+  .container-item {
+    width: 600px;
+  }
+}
+@media all and (max-width: 650px) {
+  .container-item {
+    width: 450px;
+  }
+}
+@media all and (max-width: 400px) {
+  .container-item {
+    width: 320px;
+  }
+}
+
+/* Notification Styles */
+.info,
+.attention,
+.alert,
+.success {
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  font-weight: 500;
+  transition: 0.3s ease-in-out;
+  border-left: 5px solid;
+}
+
+.info {
+  background-color: #e6f7ff;
+  border-color: #1890ff;
+}
+
+.attention {
+  background-color: #fffbe6;
+  border-color: #faad14;
+}
+
+.success {
+  background-color: #f6ffed;
+  border-color: #52c41a;
+}
+
+/* Button Styling */
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+  box-shadow: 0px 4px 10px rgba(255, 117, 140, 0.2);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #ff5a87 0%, #ff3b6e 100%);
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}

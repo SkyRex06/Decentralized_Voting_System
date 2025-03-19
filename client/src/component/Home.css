@@ -1,0 +1,48 @@
+/* Label Styling */
+.label-home {
+  padding: 0.5em;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Input Field Styling */
+.input-home {
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px;
+  width: 100%;
+  max-width: 350px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Input Focus Effect */
+.input-home:focus {
+  border-color: #1890ff;
+  outline: none;
+  box-shadow: 0px 4px 12px rgba(24, 144, 255, 0.3);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Input & Label Block Display */
+.input-home,
+.label-home {
+  display: block;
+  margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .input-home {
+    width: 90%;
+    min-width: auto;
+  }
+}

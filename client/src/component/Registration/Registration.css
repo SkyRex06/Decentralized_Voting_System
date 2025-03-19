@@ -1,0 +1,87 @@
+/* Main Container */
+.div-li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Input Field Styling */
+.input-r {
+  margin: 0.5em 0;
+  padding: 12px;
+  width: 100%;
+  max-width: 350px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Input Focus Effect */
+.input-r:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Label Styling */
+.label-r {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  padding: 0.5em;
+  display: block;
+}
+
+/* Button Styling */
+.btn-add {
+  width: 60%;
+  padding: 12px;
+  margin: 1em auto;
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 3px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Button Hover Effect */
+.btn-add:hover {
+  background: linear-gradient(135deg, #0056b3, #003f7f);
+  box-shadow: 0px 5px 15px rgba(0, 91, 187, 0.4);
+}
+
+/* Note Section */
+.note {
+  width: 90%;
+  padding: 12px;
+  text-align: justify;
+  max-height: 120px;
+  overflow: auto;
+  line-height: 1.6em;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .input-r {
+    width: 90%;
+    min-width: auto;
+  }
+  
+  .btn-add {
+    width: 80%;
+  }
+}

@@ -167,7 +167,6 @@ contract Election {
         start = false;
     }
 
-    // Get election start and end values
     function getStart() public view returns (bool) {
         return start;
     }

@@ -107,9 +107,7 @@ tr:nth-child(even) {
   max-height: 150px;
   display: inline-block;
   margin-right: 1%;
-  overflow: auto;
   padding-right: 1rem;
-  scrollbar-width: thin;
 }
 
 .winner-votes {
@@ -149,7 +147,6 @@ tr:nth-child(even) {
   padding: 0.5rem;
   font-size: 3rem;
   font-weight: 700;
-  overflow-y: auto;
   text-align: center;
   color: var(--primary);
   line-height: 1;
@@ -160,130 +157,3 @@ tr:nth-child(even) {
   animation: pulse 2s infinite;
 }
 
-/* Glassmorphism Winner Container */
-.glass-winner-container {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.dark-mode .glass-winner-container {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Neumorphic Winner Container */
-.neumorphic-winner-container {
-  background: #f0f0f3;
-  box-shadow: 10px 10px 20px #d1d1d4, -10px -10px 20px #ffffff;
-  border: none;
-}
-
-.dark-mode .neumorphic-winner-container {
-  background: #2a2a2a;
-  box-shadow: 10px 10px 20px #1c1c1c, -10px -10px 20px #383838;
-}
-
-/* Animations */
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.animate-winner {
-  animation: winnerSlideIn 0.5s ease-out forwards;
-}
-
-@keyframes winnerSlideIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
-}
-
-/* Winner Crown Icon */
-.winner-slogan::before {
-  content: '👑';
-  font-size: 1.2rem;
-  margin-right: 0.5rem;
-  display: inline-block;
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Responsive Adjustments */
-@media all and (max-width: 850px) {
-  .container-winner {
-    width: 700px;
-  }
-}
-
-@media all and (max-width: 750px) {
-  .container-winner {
-    width: 600px;
-  }
-  
-  .winner-info, .winner-votes {
-    width: 100%;
-    margin: 0.5rem 0;
-    display: block;
-  }
-  
-  .vote-count {
-    font-size: 2.5rem;
-  }
-}
-
-@media all and (max-width: 650px) {
-  .container-winner {
-    width: 400px;
-    padding: 1.5rem;
-  }
-  
-  .winner-slogan {
-    font-size: 1.25rem;
-  }
-}
-
-@media all and (max-width: 400px) {
-  .container-winner {
-    width: 300px;
-    padding: 1rem;
-  }
-  
-  .winner-slogan {
-    font-size: 1.1rem;
-  }
-  
-  .vote-count {
-    font-size: 2rem;
-  }
-  
-  table {
-    font-size: 0.85rem;
-  }
-  
-  th, td {
-    padding: 0.6rem;
-  }
-}

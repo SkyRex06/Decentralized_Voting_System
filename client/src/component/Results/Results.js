@@ -1,17 +1,10 @@
-// Node modules
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-// Components
 import Navbar from "../Navbar/Navigation";
 import NavbarAdmin from "../Navbar/NavigationAdmin";
 import NotInit from "../NotInit";
-
-// Contract
 import getWeb3 from "../../getWeb3";
 import Election from "../../contracts/Election.json";
-
-// CSS
 import "./Results.css";
 
 export default class Result extends Component {
@@ -29,19 +22,13 @@ export default class Result extends Component {
     };
   }
   componentDidMount = async () => {
-    // refreshing once
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
     try {
-      // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Election.networks[networkId];
       const instance = new web3.eth.Contract(
@@ -49,11 +36,7 @@ export default class Result extends Component {
         deployedNetwork && deployedNetwork.address
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
       this.setState({ web3, ElectionInstance: instance, account: accounts[0] });
-
-      // Get total number of candidates
       const candidateCount = await this.state.ElectionInstance.methods
         .getTotalCandidate()
         .call();
@@ -79,14 +62,11 @@ export default class Result extends Component {
       }
 
       this.setState({ candidates: this.state.candidates });
-
-      // Admin account and verification
       const admin = await this.state.ElectionInstance.methods.getAdmin().call();
       if (this.state.account === admin) {
         this.setState({ isAdmin: true });
       }
     } catch (error) {
-      // Catch any errors for any of the above operations.
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
       );
@@ -137,7 +117,6 @@ export default class Result extends Component {
 
 function displayWinner(candidates) {
   const getWinner = (candidates) => {
-    // Returns an object having maxium vote count
     let maxVoteRecived = 0;
     let winnerCandidate = [];
     for (let i = 0; i < candidates.length; i++) {

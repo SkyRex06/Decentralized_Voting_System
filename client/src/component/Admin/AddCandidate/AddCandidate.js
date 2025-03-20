@@ -26,35 +26,25 @@ export default class AddCandidate extends Component {
   }
 
   componentDidMount = async () => {
-    // refreshing page only once
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
 
     try {
-      // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Election.networks[networkId];
       const instance = new web3.eth.Contract(
         Election.abi,
         deployedNetwork && deployedNetwork.address
       );
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
       this.setState({
         web3: web3,
         ElectionInstance: instance,
         account: accounts[0],
       });
-
-      // Total number of candidates
       const candidateCount = await this.state.ElectionInstance.methods
         .getTotalCandidate()
         .call();
@@ -65,7 +55,6 @@ export default class AddCandidate extends Component {
         this.setState({ isAdmin: true });
       }
 
-      // Loading Candidates details
       for (let i = 0; i < this.state.candidateCount; i++) {
         const candidate = await this.state.ElectionInstance.methods
           .candidateDetails(i)
@@ -79,7 +68,6 @@ export default class AddCandidate extends Component {
 
       this.setState({ candidates: this.state.candidates });
     } catch (error) {
-      // Catch any errors for any of the above operations.
       console.error(error);
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`

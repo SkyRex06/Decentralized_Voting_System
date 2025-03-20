@@ -1,15 +1,8 @@
-// Node modules
 import React, { Component } from "react";
-
-// Components
 import Navbar from "../Navbar/Navigation";
 import NavbarAdmin from "../Navbar/NavigationAdmin";
 import NotInit from "../NotInit";
-
-// CSS
 import "./Registration.css";
-
-// Contract
 import getWeb3 from "../../getWeb3";
 import Election from "../../contracts/Election.json";
 
@@ -37,21 +30,14 @@ export default class Registration extends Component {
       },
     };
   }
-
-  // refreshing once
   componentDidMount = async () => {
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
     try {
-      // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Election.networks[networkId];
       const instance = new web3.eth.Contract(
@@ -59,33 +45,26 @@ export default class Registration extends Component {
         deployedNetwork && deployedNetwork.address
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
       this.setState({
         web3: web3,
         ElectionInstance: instance,
         account: accounts[0],
       });
-
-      // Admin account and verification
       const admin = await this.state.ElectionInstance.methods.getAdmin().call();
       if (this.state.account === admin) {
         this.setState({ isAdmin: true });
       }
 
-      // Get start and end values
       const start = await this.state.ElectionInstance.methods.getStart().call();
       this.setState({ isElStarted: start });
       const end = await this.state.ElectionInstance.methods.getEnd().call();
       this.setState({ isElEnded: end });
 
-      // Total number of voters
       const voterCount = await this.state.ElectionInstance.methods
         .getTotalVoter()
         .call();
       this.setState({ voterCount: voterCount });
 
-      // Loading all the voters
       for (let i = 0; i < this.state.voterCount; i++) {
         const voterAddress = await this.state.ElectionInstance.methods
           .voters(i)
@@ -104,7 +83,6 @@ export default class Registration extends Component {
       }
       this.setState({ voters: this.state.voters });
 
-      // Loading current voters
       const voter = await this.state.ElectionInstance.methods
         .voterDetails(this.state.account)
         .call();
@@ -119,7 +97,6 @@ export default class Registration extends Component {
         },
       });
     } catch (error) {
-      // Catch any errors for any of the above operations.
       console.error(error);
       alert(
         `Failed to load web3, accounts, or contract. Check console for details (f12).`

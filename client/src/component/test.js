@@ -1,6 +1,5 @@
 import React from "react";
 
-// import FileReader from "./FileReader";
 
 const test = () => {
   return (

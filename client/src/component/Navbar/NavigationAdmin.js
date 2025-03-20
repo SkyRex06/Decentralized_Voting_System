@@ -16,11 +16,7 @@ export default function NavbarAdmin() {
         className="navbar-links"
         style={{ transform: open ? "translateX(0px)" : "" }}
       >
-        <li>
-          <NavLink to="/Verification" activeClassName="nav-active">
-            Verification
-          </NavLink>
-        </li>
+       
         <li>
           <NavLink to="/AddCandidate" activeClassName="nav-active">
             Add Candidate

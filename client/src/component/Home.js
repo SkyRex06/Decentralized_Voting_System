@@ -56,9 +56,9 @@ export default class Home extends Component {
       this.setState({ elEnded: end });
 
       const electionDetails = await this.state.ElectionInstance.methods
-      .getElectionDetails()
-      .call();
-      
+        .getElectionDetails()
+        .call();
+
       this.setState({
         elDetails: {
           adminName: electionDetails.adminName,
@@ -75,12 +75,14 @@ export default class Home extends Component {
       console.error(error);
     }
   };
+
   endElection = async () => {
     await this.state.ElectionInstance.methods
       .endElection()
       .send({ from: this.state.account, gas: 1000000 });
     window.location.reload();
   };
+
   registerElection = async (data) => {
     await this.state.ElectionInstance.methods
       .setElectionDetails(
@@ -110,10 +112,10 @@ export default class Home extends Component {
           <div className="container-item center-items info">
             Your Account: {this.state.account}
           </div>
-          {!this.state.elStarted & !this.state.elEnded ? (
+          {!this.state.elStarted && !this.state.elEnded ? (
             <div className="container-item info">
               <center>
-                <h3>The election has not been initialize.</h3>
+                <h3>The election has not been initialized.</h3>
                 {this.state.isAdmin ? (
                   <p>Set up the election.</p>
                 ) : (
@@ -131,7 +133,7 @@ export default class Home extends Component {
           <>
             <UserHome el={this.state.elDetails} />
           </>
-        ) : !this.state.isElStarted && this.state.isElEnded ? (
+        ) : !this.state.elStarted && this.state.elEnded ? (
           <>
             <div className="container-item attention">
               <center>
@@ -170,7 +172,7 @@ export default class Home extends Component {
       return (
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            {!this.state.elStarted & !this.state.elEnded ? (
+            {!this.state.elStarted && !this.state.elEnded ? (
               <div className="container-main">
                 {/* about-admin */}
                 <div className="about-admin">

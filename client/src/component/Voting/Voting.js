@@ -22,13 +22,12 @@ export default class Voting extends Component {
       currentVoter: {
         address: undefined,
         name: null,
-        phone: null,
         hasVoted: false,
-        isVerified: false,
         isRegistered: false,
       },
     };
   }
+
   componentDidMount = async () => {
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
@@ -59,6 +58,7 @@ export default class Voting extends Component {
       this.setState({ isElStarted: start });
       const end = await this.state.ElectionInstance.methods.getEnd().call();
       this.setState({ isElEnded: end });
+
       for (let i = 1; i <= this.state.candidateCount; i++) {
         const candidate = await this.state.ElectionInstance.methods
           .candidateDetails(i - 1)
@@ -78,9 +78,7 @@ export default class Voting extends Component {
         currentVoter: {
           address: voter.voterAddress,
           name: voter.name,
-          phone: voter.phone,
           hasVoted: voter.hasVoted,
-          isVerified: voter.isVerified,
           isRegistered: voter.isRegistered,
         },
       });
@@ -126,7 +124,6 @@ export default class Voting extends Component {
             className="vote-bth"
             disabled={
               !this.state.currentVoter.isRegistered ||
-              !this.state.currentVoter.isVerified ||
               this.state.currentVoter.hasVoted
             }
           >
@@ -156,50 +153,42 @@ export default class Voting extends Component {
           ) : this.state.isElStarted && !this.state.isElEnded ? (
             <>
               {this.state.currentVoter.isRegistered ? (
-                this.state.currentVoter.isVerified ? (
-                  this.state.currentVoter.hasVoted ? (
-                    <div className="container-item success">
-                      <div>
-                        <strong>You've casted your vote.</strong>
-                        <p />
-                        <center>
-                          <Link
-                            to="/Results"
-                            style={{
-                              color: "black",
-                              textDecoration: "underline",
-                            }}
-                          >
-                            See Results
-                          </Link>
-                        </center>
-                      </div>
+                this.state.currentVoter.hasVoted ? (
+                  <div className="container-item success">
+                    <div>
+                      <strong>You've casted your vote.</strong>
+                      <p />
+                      <center>
+                        <Link
+                          to="/Results"
+                          style={{
+                            color: "black",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          See Results
+                        </Link>
+                      </center>
                     </div>
-                  ) : (
-                    <div className="container-item info">
-                      <center>Go ahead and cast your vote.</center>
-                    </div>
-                  )
+                  </div>
                 ) : (
-                  <div className="container-item attention">
-                    <center>Please wait for admin to verify.</center>
+                  <div className="container-item info">
+                    <center>Go ahead and cast your vote.</center>
                   </div>
                 )
               ) : (
-                <>
-                  <div className="container-item attention">
-                    <center>
-                      <p>You're not registered. Please register first.</p>
-                      <br />
-                      <Link
-                        to="/Registration"
-                        style={{ color: "black", textDecoration: "underline" }}
-                      >
-                        Registration Page
-                      </Link>
-                    </center>
-                  </div>
-                </>
+                <div className="container-item attention">
+                  <center>
+                    <p>You're not registered. Please register first.</p>
+                    <br />
+                    <Link
+                      to="/Registration"
+                      style={{ color: "black", textDecoration: "underline" }}
+                    >
+                      Registration Page
+                    </Link>
+                  </center>
+                </div>
               )}
               <div className="container-main">
                 <h2>Candidates</h2>
@@ -222,20 +211,18 @@ export default class Voting extends Component {
               </div>
             </>
           ) : !this.state.isElStarted && this.state.isElEnded ? (
-            <>
-              <div className="container-item attention">
-                <center>
-                  <h3>The Election ended.</h3>
-                  <br />
-                  <Link
-                    to="/Results"
-                    style={{ color: "black", textDecoration: "underline" }}
-                  >
-                    See results
-                  </Link>
-                </center>
-              </div>
-            </>
+            <div className="container-item attention">
+              <center>
+                <h3>The Election ended.</h3>
+                <br />
+                <Link
+                  to="/Results"
+                  style={{ color: "black", textDecoration: "underline" }}
+                >
+                  See results
+                </Link>
+              </center>
+            </div>
           ) : null}
         </div>
       </>

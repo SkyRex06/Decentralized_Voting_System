@@ -85,3 +85,89 @@
     width: 80%;
   }
 }
+
+/* Registration Page Styling */
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #2d3748;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+  outline: none;
+}
+
+.form-group input[readonly] {
+  background-color: #f7fafc;
+  color: #718096;
+}
+
+/* Form Actions */
+.form-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.form-actions button {
+  padding: 0.75rem 2rem;
+}
+
+.form-actions button:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+/* Required Field Marker */
+.required {
+  color: #e53e3e;
+  margin-left: 0.25rem;
+}
+
+/* Card Grid Layout */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e2e8f0;
+  border-radius: 50%;
+  border-top-color: #3182ce;
+  margin: 2rem auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}

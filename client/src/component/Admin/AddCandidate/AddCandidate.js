@@ -93,10 +93,19 @@ export default class AddCandidate extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <div className="container-main">
+            <div className="welcome-box">
+              <h1>Loading VoteSecure</h1>
+              <p className="welcome-subtitle">
+                Connecting to the blockchain network...
+              </p>
+              <div className="loading-spinner"></div>
+            </div>
+          </div>
         </>
       );
     }
+    
     if (!this.state.isAdmin) {
       return (
         <>
@@ -105,89 +114,103 @@ export default class AddCandidate extends Component {
         </>
       );
     }
+    
     return (
       <>
         <NavbarAdmin />
         <div className="container-main">
-          <h2>Add a new candidate</h2>
-          <small>Total candidates: {this.state.candidateCount}</small>
+          <div className="welcome-box">
+            <h1>Candidate Management</h1>
+            <p className="welcome-subtitle">
+              Add new candidates to the election ballot
+            </p>
+          </div>
+          
           <div className="container-item">
-            <form className="form">
-              <label className={"label-ac"}>
-                Header
-                <input
-                  className={"input-ac"}
-                  type="text"
-                  placeholder="eg. Marcus"
-                  value={this.state.header}
-                  onChange={this.updateHeader}
-                />
-              </label>
-              <label className={"label-ac"}>
-                Slogan
-                <input
-                  className={"input-ac"}
-                  type="text"
-                  placeholder="eg. It is what it is"
-                  value={this.state.slogan}
-                  onChange={this.updateSlogan}
-                />
-              </label>
-              <button
-                className="btn-add"
-                disabled={
-                  this.state.header.length < 3 || this.state.header.length > 21
-                }
-                onClick={this.addCandidate}
-              >
-                Add
-              </button>
+            <h2 className="title">Add New Candidate</h2>
+            <div className="info" style={{marginBottom: "1.5rem"}}>
+              <p>Current candidates: {this.state.candidateCount}</p>
+            </div>
+            
+            <form className="candidate-form">
+              <div className="form-group">
+                <label>
+                  Candidate Name
+                  <input
+                    type="text"
+                    placeholder="Enter candidate name"
+                    value={this.state.header}
+                    onChange={this.updateHeader}
+                  />
+                </label>
+                {this.state.header.length > 0 && this.state.header.length < 3 && (
+                  <small className="input-error">Name is too short</small>
+                )}
+                {this.state.header.length > 21 && (
+                  <small className="input-error">Name is too long (max 21 characters)</small>
+                )}
+              </div>
+              
+              <div className="form-group">
+                <label>
+                  Campaign Slogan
+                  <input
+                    type="text"
+                    placeholder="Enter campaign slogan"
+                    value={this.state.slogan}
+                    onChange={this.updateSlogan}
+                  />
+                </label>
+              </div>
+              
+              <div className="form-actions">
+                <button
+                  disabled={
+                    this.state.header.length < 3 || this.state.header.length > 21
+                  }
+                  onClick={this.addCandidate}
+                >
+                  Add Candidate
+                </button>
+              </div>
             </form>
           </div>
         </div>
-        {loadAdded(this.state.candidates)}
+        
+        {this.renderCandidatesList()}
       </>
     );
   }
-}
-export function loadAdded(candidates) {
-  const renderAdded = (candidate) => {
-    return (
-      <>
-        <div className="container-list success">
-          <div
-            style={{
-              maxHeight: "21px",
-              overflow: "auto",
-            }}
-          >
-            {candidate.id}. <strong>{candidate.header}</strong>:{" "}
-            {candidate.slogan}
+
+  renderCandidatesList = () => {
+    if (this.state.candidates.length === 0) {
+      return (
+        <div className="container-main">
+          <div className="container-item attention">
+            <h3>No Candidates Yet</h3>
+            <p>Add candidates using the form above to get started.</p>
           </div>
         </div>
-      </>
-    );
-  };
-  return (
-    <div className="container-main" style={{ borderTop: "1px solid" }}>
-      <div className="container-item info">
-        <center>Candidates List</center>
+      );
+    }
+    
+    return (
+      <div className="container-main">
+        <h2 className="title">Current Candidates</h2>
+        <div className="card-grid">
+          {this.state.candidates.map((candidate) => (
+            <div key={candidate.id} className="candidate-card">
+              <div className="candidate-card__content">
+                <h3 className="candidate-card__name">
+                  {candidate.header}
+                  <span className="candidate-id">#{candidate.id}</span>
+                </h3>
+                <p className="candidate-card__party">{candidate.slogan}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      {candidates.length < 1 ? (
-        <div className="container-item alert">
-          <center>No candidates added.</center>
-        </div>
-      ) : (
-        <div
-          className="container-item"
-          style={{
-            display: "block",
-            backgroundColor: "#DDFFFF",
-          }}
-        >
-          {candidates.map(renderAdded)}
-        </div>
-      )}
-    </div>
-  );
+    );
+  }
 }

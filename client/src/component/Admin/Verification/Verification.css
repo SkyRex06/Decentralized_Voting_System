@@ -74,3 +74,160 @@ h3 {
   color: #333;
   margin-bottom: 15px;
 }
+
+/* Verification Component Styles */
+
+/* Verification Stats */
+.verification-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.stat-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #3182ce;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Verification Status Badge */
+.verification-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0.5rem 0 1rem;
+}
+
+.verification-status.verified {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+}
+
+.verification-status.pending {
+  background-color: #fefcbf;
+  color: #975a16;
+}
+
+/* Voter Details */
+.voter-address {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  background: #f7fafc;
+  padding: 0.5rem;
+  border-radius: 6px;
+  color: #4a5568;
+  word-break: break-all;
+  margin-bottom: 1rem;
+}
+
+.verification-header {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.voter-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+/* Verification Table */
+.verification-table {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.verification-table th,
+.verification-table td {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.verification-table th {
+  font-weight: 600;
+  color: #4a5568;
+  width: 40%;
+}
+
+/* Verification Actions */
+.verification-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.verify-button {
+  padding: 0.6rem 1.25rem;
+  background-color: #38a169;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.verify-button:hover {
+  background-color: #2f855a;
+  transform: translateY(-1px);
+}
+
+/* Info Row */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.info-label {
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.info-value {
+  color: #2d3748;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 3rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .verification-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

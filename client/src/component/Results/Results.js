@@ -79,7 +79,15 @@ export default class Result extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <div className="container-main">
+            <div className="welcome-box">
+              <h1>Loading VoteSecure</h1>
+              <p className="welcome-subtitle">
+                Connecting to the blockchain network...
+              </p>
+              <div className="loading-spinner"></div>
+            </div>
+          </div>
         </>
       );
     }
@@ -87,24 +95,26 @@ export default class Result extends Component {
     return (
       <>
         {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-        <br />
         <div>
           {!this.state.isElStarted && !this.state.isElEnded ? (
             <NotInit />
           ) : this.state.isElStarted && !this.state.isElEnded ? (
-            <div className="container-item attention">
-              <center>
-                <h3>The election is being conducted at the movement.</h3>
-                <p>Result will be displayed once the election has ended.</p>
-                <p>Go ahead and cast your vote {"(if not already)"}.</p>
-                <br />
-                <Link
-                  to="/Voting"
-                  style={{ color: "black", textDecoration: "underline" }}
-                >
-                  Voting Page
-                </Link>
-              </center>
+            <div className="container-main">
+              <div className="welcome-box">
+                <h1>Election In Progress</h1>
+                <p className="welcome-subtitle">
+                  Results will be available once the election has concluded
+                </p>
+              </div>
+              <div className="container-item info">
+                <h3>Election Status: Active</h3>
+                <p>The voting process is currently ongoing. Results will be displayed after the election ends.</p>
+                <div className="form-actions">
+                  <Link to="/Voting">
+                    <button>Go to Voting</button>
+                  </Link>
+                </div>
+              </div>
             </div>
           ) : !this.state.isElStarted && this.state.isElEnded ? (
             displayResults(this.state.candidates)
@@ -129,67 +139,105 @@ function displayWinner(candidates) {
     }
     return winnerCandidate;
   };
+  
   const renderWinner = (winner) => {
     return (
-      <div className="container-winner">
-        <div className="winner-info">
-          <p className="winner-tag">Winner!</p>
-          <h2> {winner.header}</h2>
-          <p className="winner-slogan">{winner.slogan}</p>
-        </div>
+      <div className="winner-card">
+        <div className="winner-badge">Winner</div>
+        <h2 className="winner-name">{winner.header}</h2>
+        <p className="winner-slogan">{winner.slogan}</p>
         <div className="winner-votes">
-          <div className="votes-tag">Total Votes: </div>
-          <div className="vote-count">{winner.voteCount}</div>
+          <span className="vote-count">{winner.voteCount}</span>
+          <span className="vote-label">votes</span>
         </div>
       </div>
     );
   };
+  
   const winnerCandidate = getWinner(candidates);
-  return <>{winnerCandidate.map(renderWinner)}</>;
+  return (
+    <div className="winners-section">
+      <h2 className="title">Election Winner</h2>
+      <div className={winnerCandidate.length > 1 ? "winners-grid" : "winner-single"}>
+        {winnerCandidate.map(renderWinner)}
+      </div>
+    </div>
+  );
 }
 
 export function displayResults(candidates) {
   const renderResults = (candidate) => {
     return (
-      <tr>
+      <tr key={candidate.id}>
         <td>{candidate.id}</td>
         <td>{candidate.header}</td>
-        <td>{candidate.voteCount}</td>
+        <td>
+          <div className="vote-bar-container">
+            <div 
+              className="vote-bar" 
+              style={{ 
+                width: `${calculatePercentage(candidate.voteCount, getTotalVotes(candidates))}%`
+              }}
+            ></div>
+            <span className="vote-number">{candidate.voteCount}</span>
+          </div>
+        </td>
       </tr>
     );
   };
+
+  const getTotalVotes = (candidates) => {
+    return candidates.reduce((acc, candidate) => acc + parseInt(candidate.voteCount), 0);
+  };
+
+  const calculatePercentage = (votes, totalVotes) => {
+    if (totalVotes === 0) return 0;
+    return (votes / totalVotes) * 100;
+  };
+
+  const totalVotes = getTotalVotes(candidates);
+
   return (
     <>
-      {candidates.length > 0 ? (
-        <div className="container-main">{displayWinner(candidates)}</div>
-      ) : null}
-      <div className="container-main" style={{ borderTop: "1px solid" }}>
-        <h2>Results</h2>
-        <small>Total candidates: {candidates.length}</small>
-        {candidates.length < 1 ? (
-          <div className="container-item attention">
-            <center>No candidates.</center>
+      <div className="container-main">
+        <div className="welcome-box">
+          <h1>Election Results</h1>
+          <p className="welcome-subtitle">
+            The final results of the secure blockchain voting
+          </p>
+        </div>
+
+        {candidates.length > 0 ? (
+          displayWinner(candidates)
+        ) : null}
+
+        <div className="container-item">
+          <h2 className="title">Vote Distribution</h2>
+          <div className="info" style={{marginBottom: "1rem"}}>
+            <p>Total votes: {totalVotes} | Candidates: {candidates.length}</p>
           </div>
-        ) : (
-          <>
-            <div className="container-item">
+
+          {candidates.length < 1 ? (
+            <div className="container-item attention">
+              <p>No candidates participated in this election.</p>
+            </div>
+          ) : (
+            <div className="results-table">
               <table>
-                <tr>
-                  <th>Id</th>
-                  <th>Candidate</th>
-                  <th>Votes</th>
-                </tr>
-                {candidates.map(renderResults)}
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Candidate</th>
+                    <th>Vote Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {candidates.map(renderResults)}
+                </tbody>
               </table>
             </div>
-            <div
-              className="container-item"
-              style={{ border: "1px solid black" }}
-            >
-              <center>That is all.</center>
-            </div>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </>
   );

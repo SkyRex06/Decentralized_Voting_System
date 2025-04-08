@@ -19,6 +19,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className="header-accent"></div>
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -36,25 +37,23 @@ export default class App extends Component {
     );
   }
 }
+
 class NotFound extends Component {
   render() {
     return (
-      <>
-        <h1>404 NOT FOUND!</h1>
-        <center>
-          <p>
-            The page your are looking for doesn't exist.
-            <br />
-            Go to{" "}
-            <Link
-              to="/"
-              style={{ color: "black", textDecoration: "underline" }}
-            >
-              Home
-            </Link>
+      <div className="container-main">
+        <div className="welcome-box">
+          <h1>404 - Page Not Found</h1>
+          <p className="welcome-subtitle">
+            The page you are looking for doesn't exist. Please check the URL or navigate back to the home page.
           </p>
-        </center>
-      </>
+          <div className="welcome-actions">
+            <Link to="/">
+              <button>Return to Home</button>
+            </Link>
+          </div>
+        </div>
+      </div>
     );
   }
 }

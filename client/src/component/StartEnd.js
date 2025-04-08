@@ -2,81 +2,59 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const StartEnd = (props) => {
-  const btn = {
-    display: "block",
-    padding: "21px",
-    margin: "7px",
-    minWidth: "max-content",
-    textAlign: "center",
-    width: "333px",
-    alignSelf: "center",
-  };
   return (
-    <div
-      className="container-main"
-      style={{ borderTop: "1px solid", marginTop: "0px" }}
-    >
+    <div className="container-main">
       {!props.elStarted ? (
         <>
-          {/* edit here to display start election Again button */}
           {!props.elEnded ? (
             <>
-              <div
-                className="container-item attention"
-                style={{ display: "block" }}
-              >
-                <h2>Do not forget to add candidates.</h2>
+              <div className="container-item info">
+                <h3>Important Notice</h3>
                 <p>
-                  Go to{" "}
+                  Remember to add candidates before starting the election.
+                  You can add candidates in the{" "}
                   <Link
-                    title="Add a new "
-                    to="/addCandidate"
+                    to="/AddCandidate"
                     style={{
-                      color: "black",
-                      textDecoration: "underline",
+                      color: "#3182ce",
+                      textDecoration: "none",
+                      fontWeight: "500",
                     }}
                   >
-                    add candidates
+                    Add Candidates
                   </Link>{" "}
-                  page.
+                  section.
                 </p>
               </div>
-              <div className="container-item">
-                <button type="submit" style={btn}>
-                  Start Election {props.elEnded ? "Again" : null}
+              <div className="container-item" style={{ textAlign: "center" }}>
+                <button 
+                  type="submit"
+                  className="start-button"
+                >
+                  {props.elEnded ? "Restart Election" : "Start Election"}
                 </button>
               </div>
             </>
           ) : (
-            <div className="container-item">
-              <center>
-                <p>Re-deploy the contract to start election again.</p>
-              </center>
+            <div className="container-item alert">
+              <h3>Election Ended</h3>
+              <p>To start a new election, you'll need to redeploy the contract.</p>
             </div>
           )}
-          {props.elEnded ? (
-            <div className="container-item">
-              <center>
-                <p>The election ended.</p>
-              </center>
-            </div>
-          ) : null}
         </>
       ) : (
         <>
-          <div className="container-item">
-            <center>
-              <p>The election started.</p>
-            </center>
+          <div className="container-item success">
+            <h3>Election In Progress</h3>
+            <p>The election is currently active and accepting votes.</p>
           </div>
-          <div className="container-item">
+          <div className="container-item" style={{ textAlign: "center" }}>
             <button
               type="button"
-              // onClick={this.endElection}
               onClick={props.endElFn}
-              style={btn}
+              className="end-button"
             >
-              End
+              End Election
             </button>
           </div>
         </>

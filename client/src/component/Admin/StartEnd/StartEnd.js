@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-
 import Navbar from "../../Navbar/Navigation";
 import NavbarAdmin from "../../Navbar/NavigationAdmin";
-
 import AdminOnly from "../../AdminOnly";
-
 import getWeb3 from "../../../getWeb3";
 import Election from "../../../contracts/Election.json";
-
 import "./StartEnd.css";
 
 export default class StartEnd extends Component {
@@ -79,60 +75,95 @@ export default class StartEnd extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <div className="container-main">
+            <div className="welcome-box">
+              <h1>Loading VoteSecure</h1>
+              <p className="welcome-subtitle">
+                Connecting to the blockchain network...
+              </p>
+              <div className="loading-spinner"></div>
+            </div>
+          </div>
         </>
       );
     }
+    
     if (!this.state.isAdmin) {
       return (
         <>
           <Navbar />
-          <AdminOnly page="Start and end election page." />
+          <AdminOnly page="Election Control Panel" />
         </>
       );
     }
+    
     return (
       <>
         <NavbarAdmin />
-        {!this.state.elStarted & !this.state.elEnded ? (
-          <div className="container-item info">
-            <center>The election have never been initiated.</center>
-          </div>
-        ) : null}
         <div className="container-main">
-          <h3>Start or end election</h3>
-          {!this.state.elStarted ? (
-            <>
-              <div className="container-item">
-                <button onClick={this.startElection} className="start-btn">
-                  Start {this.state.elEnded ? "Again" : null}
-                </button>
-              </div>
-              {this.state.elEnded ? (
-                <div className="container-item">
-                  <center>
-                    <p>The election ended.</p>
-                  </center>
+          <div className="welcome-box">
+            <h1>Election Control Panel</h1>
+            <p className="welcome-subtitle">
+              Manage the entire election lifecycle
+            </p>
+          </div>
+          
+          <div className="election-status-panel">
+            <div className="status-section">
+              <h2>Current Status</h2>
+              <div className="status-indicators">
+                <div className="status-indicator">
+                  <span className={`status-dot ${this.state.elStarted ? 'active' : 'inactive'}`}></span>
+                  <span className="status-text">Election Started</span>
                 </div>
-              ) : null}
-            </>
-          ) : (
-            <>
-              <div className="container-item">
-                <center>
-                  <p>The election started.</p>
-                </center>
+                <div className="status-indicator">
+                  <span className={`status-dot ${this.state.elEnded ? 'active' : 'inactive'}`}></span>
+                  <span className="status-text">Election Ended</span>
+                </div>
               </div>
-              <div className="container-item">
-                <button onClick={this.endElection} className="start-btn">
-                  End
-                </button>
-              </div>
-            </>
-          )}
-          <div className="election-status">
-            <p>Started: {this.state.elStarted ? "True" : "False"}</p>
-            <p>Ended: {this.state.elEnded ? "True" : "False"}</p>
+            </div>
+            
+            <div className="action-section">
+              {!this.state.elStarted ? (
+                <div className="container-item">
+                  <h3>Election Not Started</h3>
+                  <p>Start the election to allow voters to cast their votes.</p>
+                  <div className="form-actions">
+                    <button 
+                      onClick={this.startElection} 
+                      className="start-button"
+                    >
+                      {this.state.elEnded ? "Restart Election" : "Start Election"}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="container-item">
+                  <h3>Election In Progress</h3>
+                  <p>The election is currently active and voters can cast their votes.</p>
+                  <div className="form-actions">
+                    <button 
+                      onClick={this.endElection} 
+                      className="end-button"
+                    >
+                      End Election
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div className="info-cards">
+            <div className="info-card">
+              <h3>Before Starting</h3>
+              <p>Make sure you have added all candidates and verified registered voters before starting the election.</p>
+            </div>
+            
+            <div className="info-card">
+              <h3>After Ending</h3>
+              <p>Once an election is ended, the results will be available, but no more votes can be cast.</p>
+            </div>
           </div>
         </div>
       </>

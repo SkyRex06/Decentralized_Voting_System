@@ -1,36 +1,52 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import WalletConnect from "../Wallet/WalletConnect";
 
 import "./Navbar.css";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <nav>
-      <NavLink to="/" className="header">
-        <i className="fab fa-hive"></i> Home
-      </NavLink>
-      <ul
-        className="navbar-links"
-        style={{ width: "35%", transform: open ? "translateX(0px)" : "" }}
-      >
-        <li>
-          <NavLink to="/Registration" activeClassName="nav-active">
-            <i className="far fa-registered" /> Registration
+    <>
+      <div className="header-accent"></div>
+      <nav className="navbar">
+        <div className="navbar-container">
+          <NavLink to="/" className="brand-logo">
+            Vote<span>Secure</span>
           </NavLink>
-        </li>
-        <li>
-          <NavLink to="/Voting" activeClassName="nav-active">
-            <i className="fas fa-vote-yea" /> Voting
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/Results" activeClassName="nav-active">
-            <i className="fas fa-poll-h" /> Results
-          </NavLink>
-        </li>
-      </ul>
-      <i onClick={() => setOpen(!open)} className="fas fa-bars burger-menu"></i>
-    </nav>
+          
+          <ul className={`navbar-links ${open ? "active" : ""}`}>
+            <li>
+              <NavLink to="/Registration" activeClassName="nav-active">
+                Registration
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/Voting" activeClassName="nav-active">
+                Voting
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/Results" activeClassName="nav-active">
+                Results
+              </NavLink>
+            </li>
+          </ul>
+          
+          <div className="navbar-right">
+            <WalletConnect />
+            <button 
+              className="menu-toggle" 
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 }

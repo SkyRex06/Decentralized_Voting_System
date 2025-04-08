@@ -2,23 +2,30 @@ import React from "react";
 
 function UserHome(props) {
   return (
-    <div>
-      <div className="container-main">
-        <div className="container-list title">
-          <h1>{props.el.electionTitle}</h1>
-          <br />
-          <center>{props.el.organizationTitle}</center>
-          <table style={{ marginTop: "21px" }}>
-            <tr>
-              <th>admin</th>
-              <td>
-                {props.el.adminName} ({props.el.adminTitle})
-              </td>
-            </tr>
-            <tr>
-              <th>contact</th>
-              <td style={{ textTransform: "none" }}>{props.el.adminEmail}</td>
-            </tr>
+    <div className="container-main">
+      <div className="welcome-box">
+        <h1 className="welcome-title">{props.el.electionTitle}</h1>
+        <p className="welcome-subtitle">
+          {props.el.organizationTitle}
+        </p>
+      </div>
+      
+      <div className="container-item">
+        <h3 className="title">Election Information</h3>
+        <div className="election-details">
+          <table>
+            <tbody>
+              <tr>
+                <th>Administrator</th>
+                <td>
+                  {props.el.adminName} <span className="admin-title">({props.el.adminTitle})</span>
+                </td>
+              </tr>
+              <tr>
+                <th>Contact</th>
+                <td className="admin-email">{props.el.adminEmail}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

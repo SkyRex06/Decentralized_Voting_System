@@ -6,29 +6,31 @@
   color: #444;
   display: block;
   transition: all 0.3s ease-in-out;
+  margin-bottom: 1.2rem;
+  width: 100%;
 }
 
 /* Input Field Styling */
 .input-home {
-  margin-top: 1em;
+  margin-top: 0.5rem;
   margin-left: auto;
   margin-right: auto;
-  padding: 12px;
+  padding: 0.75rem;
   width: 100%;
   max-width: 350px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
   background: rgba(255, 255, 255, 0.6);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* Input Focus Effect */
 .input-home:focus {
-  border-color: #1890ff;
+  border-color: #4299e1;
   outline: none;
-  box-shadow: 0px 4px 12px rgba(24, 144, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
   background: rgba(255, 255, 255, 0.8);
 }
 
@@ -44,5 +46,138 @@
   .input-home {
     width: 90%;
     min-width: auto;
+  }
+}
+
+/* Home Component Styles */
+.about-admin,
+.about-election {
+  margin: 2rem 0;
+}
+
+.about-admin h3,
+.about-election h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.admin-form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.welcome-box {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.welcome-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a2b4b;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.welcome-subtitle {
+  font-size: 1.1rem;
+  color: #4a5568;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.welcome-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.account-box {
+  background-color: #f7fafc;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.account-label {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.account-address {
+  font-family: 'JetBrains Mono', monospace;
+  color: #2d3748;
+  font-size: 0.9rem;
+  background: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-badge.active {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+}
+
+.status-badge.pending {
+  background-color: #fefcbf;
+  color: #975a16;
+}
+
+.status-badge.ended {
+  background-color: #fed7d7;
+  color: #9b2c2c;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.active {
+  background-color: #38b2ac;
+}
+
+.status-dot.pending {
+  background-color: #d69e2e;
+}
+
+.status-dot.ended {
+  background-color: #e53e3e;
+}
+
+@media (max-width: 768px) {
+  .admin-form-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }

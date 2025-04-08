@@ -157,3 +157,133 @@ tr:nth-child(even) {
   animation: pulse 2s infinite;
 }
 
+/* Results Component Styling */
+
+/* Winner Section */
+.winners-section {
+  margin-bottom: 3rem;
+}
+
+.winner-single {
+  display: flex;
+  justify-content: center;
+}
+
+.winners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.winner-card {
+  background: #ffffff;
+  border: 2px solid #3182ce;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(49, 130, 206, 0.15);
+  margin: 1.5rem auto;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.winner-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(49, 130, 206, 0.2);
+}
+
+.winner-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3182ce;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.35rem 1.5rem;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.winner-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.winner-slogan {
+  color: #718096;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.winner-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+}
+
+.vote-count {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #3182ce;
+  line-height: 1;
+}
+
+.vote-label {
+  font-size: 1rem;
+  color: #718096;
+  margin-top: 0.5rem;
+}
+
+/* Results Table */
+.results-table {
+  margin: 2rem 0;
+}
+
+.results-table table {
+  width: 100%;
+}
+
+.results-table th:last-child {
+  width: 50%;
+}
+
+/* Vote Bars */
+.vote-bar-container {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  position: relative;
+  background: #edf2f7;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vote-bar {
+  background: linear-gradient(90deg, #3182ce, #63b3ed);
+  height: 100%;
+  min-width: 5%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.vote-number {
+  position: absolute;
+  right: 10px;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .winners-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-
 import Navbar from "../../Navbar/Navigation";
 import NavbarAdmin from "../../Navbar/NavigationAdmin";
-
 import AdminOnly from "../../AdminOnly";
-
 import getWeb3 from "../../../getWeb3";
 import Election from "../../../contracts/Election.json";
-
 import "./Verification.css";
 
 export default class Registration extends Component {
@@ -75,106 +71,167 @@ export default class Registration extends Component {
       console.error(error);
     }
   };
-  renderUnverifiedVoters = (voter) => {
+
+  renderUnverifiedVoters = (voter, index) => {
     const verifyVoter = async (verifiedStatus, address) => {
       await this.state.ElectionInstance.methods
         .verifyVoter(verifiedStatus, address)
         .send({ from: this.state.account, gas: 1000000 });
       window.location.reload();
     };
-    return (
-      <>
-        {voter.isVerified ? (
-          <div className="container-list success">
-            <p style={{ margin: "7px 0px" }}>AC: {voter.address}</p>
-            <table>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Voted</th>
-              </tr>
-              <tr>
-                <td>{voter.name}</td>
-                <td>{voter.phone}</td>
-                <td>{voter.hasVoted ? "True" : "False"}</td>
-              </tr>
-            </table>
+    
+    if (voter.isVerified) {
+      return (
+        <div key={index} className="container-item success">
+          <h4>{voter.name}</h4>
+          <div className="verification-status verified">
+            <span className="status-dot active"></span>Verified
           </div>
-        ) : null}
-        <div
-          className="container-list attention"
-          style={{ display: voter.isVerified ? "none" : null }}
-        >
-          <table>
-            <tr>
-              <th>Account address</th>
-              <td>{voter.address}</td>
-            </tr>
-            <tr>
-              <th>Name</th>
-              <td>{voter.name}</td>
-            </tr>
-            <tr>
-              <th>Phone</th>
-              <td>{voter.phone}</td>
-            </tr>
-            <tr>
-              <th>Voted</th>
-              <td>{voter.hasVoted ? "True" : "False"}</td>
-            </tr>
-            <tr>
-              <th>Verified</th>
-              <td>{voter.isVerified ? "True" : "False"}</td>
-            </tr>
-            <tr>
-              <th>Registered</th>
-              <td>{voter.isRegistered ? "True" : "False"}</td>
-            </tr>
+          <div className="voter-details">
+            <p className="voter-address">{voter.address}</p>
+            <div className="voter-info">
+              <div className="info-row">
+                <span className="info-label">Phone:</span>
+                <span className="info-value">{voter.phone}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Vote Status:</span>
+                <span className="info-value">{voter.hasVoted ? "Vote Cast" : "Not Voted"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    return (
+      <div key={index} className="container-item pending">
+        <h3 className="verification-header">Pending Verification</h3>
+        <div className="verification-status pending">
+          <span className="status-dot pending"></span>Awaiting Approval
+        </div>
+        
+        <div className="voter-details">
+          <div className="voter-name">{voter.name}</div>
+          <p className="voter-address">{voter.address}</p>
+          
+          <table className="verification-table">
+            <tbody>
+              <tr>
+                <th>Phone</th>
+                <td>{voter.phone}</td>
+              </tr>
+              <tr>
+                <th>Registration Status</th>
+                <td>{voter.isRegistered ? "Registered" : "Not Registered"}</td>
+              </tr>
+              <tr>
+                <th>Voted</th>
+                <td>{voter.hasVoted ? "Yes" : "No"}</td>
+              </tr>
+            </tbody>
           </table>
-          <div style={{}}>
+          
+          <div className="verification-actions">
             <button
-              className="btn-verification approve"
-              disabled={voter.isVerified}
+              className="verify-button"
               onClick={() => verifyVoter(true, voter.address)}
             >
-              Approve
+              Approve Voter
             </button>
           </div>
         </div>
-      </>
+      </div>
     );
   };
+  
   render() {
     if (!this.state.web3) {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <div className="container-main">
+            <div className="welcome-box">
+              <h1>Loading VoteSecure</h1>
+              <p className="welcome-subtitle">
+                Connecting to the blockchain network...
+              </p>
+              <div className="loading-spinner"></div>
+            </div>
+          </div>
         </>
       );
     }
+    
     if (!this.state.isAdmin) {
       return (
         <>
           <Navbar />
-          <AdminOnly page="Verification Page." />
+          <AdminOnly page="Verification Page" />
         </>
       );
     }
+    
+    // Get counts of verified and unverified voters
+    const verifiedVoters = this.state.voters.filter(voter => voter.isVerified);
+    const pendingVoters = this.state.voters.filter(voter => !voter.isVerified && voter.isRegistered);
+    
     return (
       <>
         <NavbarAdmin />
         <div className="container-main">
-          <h3>Verification</h3>
-          <small>Total Voters: {this.state.voters.length}</small>
+          <div className="welcome-box">
+            <h1>Voter Verification</h1>
+            <p className="welcome-subtitle">
+              Review and verify registered voters
+            </p>
+          </div>
+          
+          <div className="verification-stats">
+            <div className="stat-box">
+              <div className="stat-value">{this.state.voters.length}</div>
+              <div className="stat-label">Total Voters</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-value">{verifiedVoters.length}</div>
+              <div className="stat-label">Verified</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-value">{pendingVoters.length}</div>
+              <div className="stat-label">Pending</div>
+            </div>
+          </div>
+          
           {this.state.voters.length < 1 ? (
-            <div className="container-item info">None has registered yet.</div>
+            <div className="container-item attention">
+              <h3>No Registered Voters</h3>
+              <p>There are no voters registered in the system yet.</p>
+            </div>
           ) : (
             <>
-              <div className="container-item info">
-                <center>List of registered voters</center>
-              </div>
-              {this.state.voters.map(this.renderUnverifiedVoters)}
+              {pendingVoters.length > 0 && (
+                <div className="section">
+                  <h2 className="title">Pending Verification</h2>
+                  <div className="info" style={{marginBottom: "1.5rem"}}>
+                    <p>The following voters need to be verified before they can participate in the election.</p>
+                  </div>
+                  <div className="card-grid">
+                    {pendingVoters.map(this.renderUnverifiedVoters)}
+                  </div>
+                </div>
+              )}
+              
+              {verifiedVoters.length > 0 && (
+                <div className="section">
+                  <h2 className="title">Verified Voters</h2>
+                  <div className="info" style={{marginBottom: "1.5rem"}}>
+                    <p>These voters have been approved and can participate in the election.</p>
+                  </div>
+                  <div className="card-grid">
+                    {verifiedVoters.map(this.renderUnverifiedVoters)}
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>

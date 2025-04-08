@@ -58,3 +58,63 @@
   }
 }
 
+/* Add Candidate Form Styles */
+
+.candidate-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.input-error {
+  color: #e53e3e;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Form Elements Specific to Add Candidate */
+.candidate-form input {
+  transition: border-color 0.2s ease;
+}
+
+.candidate-form input:focus {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+/* Candidate Preview */
+.candidate-preview {
+  background: #f7fafc;
+  border: 1px dashed #cbd5e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.candidate-preview h3 {
+  margin-bottom: 0.5rem;
+}
+
+.preview-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+
+.preview-empty {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .candidate-form {
+    padding: 0 1rem;
+  }
+}
+

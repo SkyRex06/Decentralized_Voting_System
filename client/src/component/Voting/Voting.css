@@ -59,3 +59,107 @@ p {
     height: 100%;
   }
 }
+
+/* Voting Component Styles */
+
+.candidate-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #edf2f7;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 1.5rem;
+}
+
+.candidate-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.candidate-card__name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.candidate-id {
+  background-color: #edf2f7;
+  color: #4a5568;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.candidate-card__party {
+  color: #718096;
+  font-size: 0.95rem;
+  margin: 0.75rem 0 1.5rem;
+  line-height: 1.5;
+}
+
+.vote-button {
+  background: #3182ce;
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.vote-button:hover:not([disabled]) {
+  background: #2b6cb0;
+}
+
+.vote-button:disabled {
+  background: #e2e8f0;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Empty Candidates Message */
+.no-candidates {
+  text-align: center;
+  padding: 2rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Timer Component */
+.election-timer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.timer-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2d3748;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.timer-label {
+  font-size: 0.8rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

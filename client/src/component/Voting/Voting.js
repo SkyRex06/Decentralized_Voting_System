@@ -113,24 +113,23 @@ export default class Voting extends Component {
       }
     };
     return (
-      <div className="container-item">
-        <div className="candidate-info">
-          <h2>
-            {candidate.header} <small>#{candidate.id}</small>
-          </h2>
-          <p className="slogan">{candidate.slogan}</p>
-        </div>
-        <div className="vote-btn-container">
+      <div className="candidate-card">
+        <div className="candidate-card__content">
+          <h3 className="candidate-card__name">
+            {candidate.header}
+            <span className="candidate-id">#{candidate.id}</span>
+          </h3>
+          <p className="candidate-card__party">{candidate.slogan}</p>
           <button
             onClick={() => confirmVote(candidate.id, candidate.header)}
-            className="vote-bth"
+            className="vote-button"
             disabled={
               !this.state.currentVoter.isRegistered ||
               !this.state.currentVoter.isVerified ||
               this.state.currentVoter.hasVoted
             }
           >
-            Vote
+            {this.state.currentVoter.hasVoted ? "Voted" : "Vote"}
           </button>
         </div>
       </div>
@@ -142,7 +141,15 @@ export default class Voting extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <div className="container-main">
+            <div className="welcome-box">
+              <h1>Loading VoteSecure</h1>
+              <p className="welcome-subtitle">
+                Connecting to the blockchain network...
+              </p>
+              <div className="loading-spinner"></div>
+            </div>
+          </div>
         </>
       );
     }
@@ -155,85 +162,83 @@ export default class Voting extends Component {
             <NotInit />
           ) : this.state.isElStarted && !this.state.isElEnded ? (
             <>
-              {this.state.currentVoter.isRegistered ? (
-                this.state.currentVoter.isVerified ? (
-                  this.state.currentVoter.hasVoted ? (
-                    <div className="container-item success">
-                      <div>
-                        <strong>You've casted your vote.</strong>
-                        <p />
-                        <center>
-                          <Link
-                            to="/Results"
-                            style={{
-                              color: "black",
-                              textDecoration: "underline",
-                            }}
-                          >
-                            See Results
+              <div className="container-main">
+                <div className="welcome-box">
+                  <h1>Secure Voting</h1>
+                  <p className="welcome-subtitle">
+                    Cast your secure vote using blockchain technology
+                  </p>
+                </div>
+
+                {/* Voter Status Messages */}
+                {this.state.currentVoter.isRegistered ? (
+                  this.state.currentVoter.isVerified ? (
+                    this.state.currentVoter.hasVoted ? (
+                      <div className="container-item success">
+                        <h3>Thank you for voting!</h3>
+                        <p>Your vote has been recorded on the blockchain.</p>
+                        <div className="form-actions">
+                          <Link to="/Results">
+                            <button>View Results</button>
                           </Link>
-                        </center>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="container-item info">
+                        <h3>Ready to Vote</h3>
+                        <p>Please select a candidate from the options below to cast your vote.</p>
+                      </div>
+                    )
                   ) : (
-                    <div className="container-item info">
-                      <center>Go ahead and cast your vote.</center>
+                    <div className="container-item attention">
+                      <h3>Verification Pending</h3>
+                      <p>Your registration is awaiting verification from the administrator.</p>
+                      <p>You'll be able to vote once your identity is verified.</p>
                     </div>
                   )
                 ) : (
-                  <div className="container-item attention">
-                    <center>Please wait for admin to verify.</center>
-                  </div>
-                )
-              ) : (
-                <>
-                  <div className="container-item attention">
-                    <center>
-                      <p>You're not registered. Please register first.</p>
-                      <br />
-                      <Link
-                        to="/Registration"
-                        style={{ color: "black", textDecoration: "underline" }}
-                      >
-                        Registration Page
+                  <div className="container-item alert">
+                    <h3>Registration Required</h3>
+                    <p>You need to register before you can vote in this election.</p>
+                    <div className="form-actions">
+                      <Link to="/Registration">
+                        <button>Register Now</button>
                       </Link>
-                    </center>
-                  </div>
-                </>
-              )}
-              <div className="container-main">
-                <h2>Candidates</h2>
-                <small>Total candidates: {this.state.candidates.length}</small>
-                {this.state.candidates.length < 1 ? (
-                  <div className="container-item attention">
-                    <center>Not one to vote for.</center>
-                  </div>
-                ) : (
-                  <>
-                    {this.state.candidates.map(this.renderCandidates)}
-                    <div
-                      className="container-item"
-                      style={{ border: "1px solid black" }}
-                    >
-                      <center>That is all.</center>
                     </div>
-                  </>
+                  </div>
                 )}
+
+                {/* Candidates Section */}
+                <div className="container-main">
+                  <h2 className="title">Candidates</h2>
+                  <div className="info" style={{marginBottom: "1rem", textAlign: "center"}}>
+                    <p>Total candidates: {this.state.candidates.length}</p>
+                  </div>
+                  
+                  {this.state.candidates.length < 1 ? (
+                    <div className="container-item attention">
+                      <p>No candidates are available to vote for at this time.</p>
+                    </div>
+                  ) : (
+                    <div className="card-grid">
+                      {this.state.candidates.map(this.renderCandidates)}
+                    </div>
+                  )}
+                </div>
               </div>
             </>
           ) : !this.state.isElStarted && this.state.isElEnded ? (
             <>
-              <div className="container-item attention">
-                <center>
-                  <h3>The Election ended.</h3>
-                  <br />
-                  <Link
-                    to="/Results"
-                    style={{ color: "black", textDecoration: "underline" }}
-                  >
-                    See results
-                  </Link>
-                </center>
+              <div className="container-main">
+                <div className="container-item attention">
+                  <h3>Election Ended</h3>
+                  <p>The voting period for this election has ended. Thank you for your participation.</p>
+                  <div className="form-actions">
+                    <Link to="/Results">
+                      <button>See Results</button>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </>
           ) : null}

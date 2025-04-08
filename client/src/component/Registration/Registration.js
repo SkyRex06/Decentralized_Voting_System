@@ -120,7 +120,15 @@ export default class Registration extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <div className="container-main">
+            <div className="welcome-box">
+              <h1>Loading VoteSecure</h1>
+              <p className="welcome-subtitle">
+                Connecting to the blockchain network...
+              </p>
+              <div className="loading-spinner"></div>
+            </div>
+          </div>
         </>
       );
     }
@@ -131,90 +139,90 @@ export default class Registration extends Component {
           <NotInit />
         ) : (
           <>
-            <div className="container-item info">
-              <p>Total registered voters: {this.state.voters.length}</p>
-            </div>
             <div className="container-main">
-              <h3>Registration</h3>
-              <small>Register to vote.</small>
+              <div className="welcome-box">
+                <h1>Voter Registration</h1>
+                <p className="welcome-subtitle">
+                  Register to participate in the secure blockchain voting process.
+                </p>
+                <div className="info" style={{textAlign: "center", marginTop: "1rem"}}>
+                  <p>Total registered voters: {this.state.voters.length}</p>
+                </div>
+              </div>
+
               <div className="container-item">
+                <h3 className="title">Registration Form</h3>
                 <form>
-                  <div className="div-li">
-                    <label className={"label-r"}>
+                  <div className="form-group">
+                    <label>
                       Account Address
                       <input
-                        className={"input-r"}
                         type="text"
                         value={this.state.account}
-                        style={{ width: "400px" }}
-                      />{" "}
+                        readOnly
+                      />
                     </label>
                   </div>
-                  <div className="div-li">
-                    <label className={"label-r"}>
-                      Name
+                  <div className="form-group">
+                    <label>
+                      Full Name
                       <input
-                        className={"input-r"}
                         type="text"
-                        placeholder="eg. Ava"
+                        placeholder="Enter your full name"
                         value={this.state.voterName}
                         onChange={this.updateVoterName}
-                      />{" "}
+                      />
                     </label>
                   </div>
-                  <div className="div-li">
-                    <label className={"label-r"}>
-                      Phone number <span style={{ color: "tomato" }}>*</span>
+                  <div className="form-group">
+                    <label>
+                      Phone Number <span className="required">*</span>
                       <input
-                        className={"input-r"}
                         type="number"
-                        placeholder="eg. 9841234567"
+                        placeholder="10-digit phone number"
                         value={this.state.voterPhone}
                         onChange={this.updateVoterPhone}
                       />
                     </label>
                   </div>
-                  <p className="note">
-                    <span style={{ color: "tomato" }}> Note: </span>
-                    <br /> Make sure your account address and Phone number are
-                    correct. <br /> Admin might not approve your account if the
-                    provided Phone number nub does not matches the account
-                    address registered in admins catalogue.
-                  </p>
-                  <button
-                    className="btn-add"
-                    disabled={
-                      this.state.voterPhone.length !== 10 ||
-                      this.state.currentVoter.isVerified
-                    }
-                    onClick={this.registerAsVoter}
-                  >
-                    {this.state.currentVoter.isRegistered
-                      ? "Update"
-                      : "Register"}
-                  </button>
+                  <div className="container-item info">
+                    <p>
+                      <strong>Important:</strong> Please ensure your account address and phone number are correct. 
+                      Your registration may not be approved if the phone number doesn't match records.
+                    </p>
+                  </div>
+                  <div className="form-actions">
+                    <button
+                      disabled={
+                        this.state.voterPhone.length !== 10 ||
+                        this.state.currentVoter.isVerified
+                      }
+                      onClick={this.registerAsVoter}
+                    >
+                      {this.state.currentVoter.isRegistered
+                        ? "Update Registration"
+                        : "Register to Vote"}
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
-            <div
-              className="container-main"
-              style={{
-                borderTop: this.state.currentVoter.isRegistered
-                  ? null
-                  : "1px solid",
-              }}
-            >
+
+            {/* Current Voter Information */}
+            <div className="container-main">
               {loadCurrentVoter(
                 this.state.currentVoter,
                 this.state.currentVoter.isRegistered
               )}
             </div>
+
+            {/* Admin Section: All Voters */}
             {this.state.isAdmin ? (
-              <div
-                className="container-main"
-                style={{ borderTop: "1px solid" }}
-              >
-                <small>TotalVoters: {this.state.voters.length}</small>
+              <div className="container-main">
+                <h3 className="title">All Voters</h3>
+                <div className="info" style={{marginBottom: "1rem"}}>
+                  <p>Total registered voters: {this.state.voters.length}</p>
+                </div>
                 {loadAllVoters(this.state.voters)}
               </div>
             ) : null}
@@ -224,88 +232,100 @@ export default class Registration extends Component {
     );
   }
 }
+
 export function loadCurrentVoter(voter, isRegistered) {
+  const statusClass = isRegistered ? "success" : "attention";
+  
   return (
     <>
-      <div
-        className={"container-item " + (isRegistered ? "success" : "attention")}
-      >
-        <center>Your Registered Info</center>
-      </div>
-      <div
-        className={"container-list " + (isRegistered ? "success" : "attention")}
-      >
+      <h3 className="title">Your Registration Status</h3>
+      <div className={`container-item ${statusClass}`}>
         <table>
-          <tr>
-            <th>Account Address</th>
-            <td>{voter.address}</td>
-          </tr>
-          <tr>
-            <th>Name</th>
-            <td>{voter.name}</td>
-          </tr>
-          <tr>
-            <th>Phone</th>
-            <td>{voter.phone}</td>
-          </tr>
-          <tr>
-            <th>Voted</th>
-            <td>{voter.hasVoted ? "True" : "False"}</td>
-          </tr>
-          <tr>
-            <th>Verification</th>
-            <td>{voter.isVerified ? "True" : "False"}</td>
-          </tr>
-          <tr>
-            <th>Registered</th>
-            <td>{voter.isRegistered ? "True" : "False"}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>Account Address</th>
+              <td><code>{voter.address}</code></td>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <td>{voter.name || "Not registered"}</td>
+            </tr>
+            <tr>
+              <th>Phone</th>
+              <td>{voter.phone || "Not registered"}</td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>
+                {voter.isVerified ? (
+                  <span className="status-badge active">
+                    <span className="status-dot active"></span>Verified
+                  </span>
+                ) : voter.isRegistered ? (
+                  <span className="status-badge pending">
+                    <span className="status-dot pending"></span>Pending Verification
+                  </span>
+                ) : (
+                  <span className="status-badge ended">
+                    <span className="status-dot ended"></span>Not Registered
+                  </span>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <th>Voting Status</th>
+              <td>{voter.hasVoted ? "Vote Cast" : "Not Voted"}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </>
   );
 }
+
 export function loadAllVoters(voters) {
-  const renderAllVoters = (voter) => {
+  if (voters.length === 0) {
     return (
-      <>
-        <div className="container-list success">
+      <div className="container-item attention">
+        <p>No voters have registered yet.</p>
+      </div>
+    );
+  }
+  
+  return (
+    <div className="card-grid">
+      {voters.map((voter, index) => (
+        <div key={index} className="container-item">
+          <h4>{voter.name || "Unnamed Voter"}</h4>
+          <div style={{fontSize: "0.9rem", marginBottom: "0.5rem"}}>
+            <code style={{fontSize: "0.8rem"}}>{voter.address.substring(0,10)}...{voter.address.substring(32)}</code>
+          </div>
           <table>
-            <tr>
-              <th>Account address</th>
-              <td>{voter.address}</td>
-            </tr>
-            <tr>
-              <th>Name</th>
-              <td>{voter.name}</td>
-            </tr>
-            <tr>
-              <th>Phone</th>
-              <td>{voter.phone}</td>
-            </tr>
-            <tr>
-              <th>Voted</th>
-              <td>{voter.hasVoted ? "True" : "False"}</td>
-            </tr>
-            <tr>
-              <th>Verified</th>
-              <td>{voter.isVerified ? "True" : "False"}</td>
-            </tr>
-            <tr>
-              <th>Registered</th>
-              <td>{voter.isRegistered ? "True" : "False"}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th>Phone</th>
+                <td>{voter.phone}</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>
+                  {voter.isVerified ? (
+                    <span className="status-badge active">Verified</span>
+                  ) : voter.isRegistered ? (
+                    <span className="status-badge pending">Pending</span>
+                  ) : (
+                    <span className="status-badge ended">Unregistered</span>
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <th>Vote</th>
+                <td>{voter.hasVoted ? "Cast" : "Not Cast"}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
-      </>
-    );
-  };
-  return (
-    <>
-      <div className="container-item success">
-        <center>List of voters</center>
-      </div>
-      {voters.map(renderAllVoters)}
-    </>
+      ))}
+    </div>
   );
 }
